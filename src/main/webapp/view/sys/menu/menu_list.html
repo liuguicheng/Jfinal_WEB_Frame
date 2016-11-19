@@ -1,0 +1,152 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<link rel="stylesheet" href="${rootPath}/assets/css/amazeui.min.css"/>
+	<link rel="stylesheet" href="${rootPath}/assets/css/admin.css">
+</head>
+<script src="${rootPath}/ext/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+	function setIdValue(id){
+		$("#id").val(id);
+	}
+	function menuContSize(down) {
+  		var pTar = null; 
+  		if (document.getElementById){ 
+  			pTar = document.getElementById(down); 
+  		}else{ 
+  			eval('pTar = ' + down + ';'); 
+  		}
+  		if (pTar && !window.opera){ 
+  			//begin resizing iframe 
+  			pTar.style.display="block" 
+	  		if (pTar.contentDocument && pTar.contentDocument.body.offsetHeight){ 
+	  			//ns6 syntax 
+	  			pTar.height = pTar.contentDocument.body.offsetHeight +40; 
+	  			if( pTar.height < 560 ){
+	  				pTar.height = 560 ;
+	  			}
+	  			/* pTar.width = pTar.contentDocument.body.scrollWidth - 260;  */
+	  			pTar.width = document.documentElement.clientWidth-500;
+	  		} else if (pTar.Document && pTar.Document.body.scrollHeight){ 
+	  			//ie5+ syntax 
+	  			pTar.height = pTar.Document.body.scrollHeight; 
+	  			pTar.width = pTar.Document.body.scrollWidth-280; 
+	  		} 
+  		} 
+	} 
+	window.onresize=function(){
+		document.getElementById('content').style.width=document.documentElement.clientWidth-500+"px";
+	}
+
+	function checkid( url ){
+		var id = $("#id").val() ;
+		if( id == -1 ) {
+			window.parent.tips( "请选择角色" );
+			return false ;
+		}
+		window.open( url +"?id="+ id ,"content_in")
+	}
+	
+	function editMenu( url ){
+		var id = $("#id").val() ;
+		if( id == -1 ) {
+			window.parent.tips( "请选择角色" );
+			return false ;
+		}
+		
+		$.post( url +"?id="+id , {}, function ( data ) {
+			if ( data.status == 1 ) {
+				window.location.href="${rootPath}/sys/menu/";
+			} else {
+				window.top.tips( data.msg );
+			}
+		}, "json" );
+		
+	}
+	
+	
+</script>
+<body style="width: 100%;height: 100%;">
+
+<!-- content start -->
+<div class="admin-content">
+
+	<!-- 导航 开始 -->
+    <div class="am-cf am-padding">
+		<div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">菜单</strong> / <small>Menu</small></div>
+    </div>
+    <!-- 导航 结束 -->
+
+    <!-- 功能键和导航 开始 -->
+    <div class="am-g">
+
+    	<!-- 左边，功能键开始 -->
+      	<div class="am-u-sm-12 am-u-md-6">
+	        <div class="am-btn-toolbar">
+	          	<div class="am-btn-group am-btn-group-xs">
+		          	<%if(so.hasPermission("MenuController.addview")){%>
+		          		<a href="${rootPath}/sys/menu/addview?id=-1" target="content_in" class="am-btn am-btn-success" ><span class="am-icon-plus"></span> 添加根菜单 </a>
+		          	<%}%>
+		          	<%if(so.hasPermission("MenuController.editview")){%>
+		          		<a href="javascript:checkid('${rootPath}/sys/menu/addview/');" target="content_in" id="user_menu_addchiview"  class="am-btn am-btn-primary" ><span class="am-icon-plus"></span> 添加子菜单 </a>
+		          	<%}%>
+		          	<%if(so.hasPermission("MenuController.editstatus")){%>
+		          		<a href="javascript:editMenu('${rootPath}/sys/menu/editstatus/');" id="user_menu_editstatus"  class="am-btn am-btn-warning" ><span class="am-icon-edit"></span> 修改状态 </a>
+		            <%}%>
+		          	<%if(so.hasPermission("MenuController.delview")){%>
+		            	<a href="javascript:editMenu('${rootPath}/sys/menu/delview/');" id="user_menu_delview" class="am-btn am-btn-danger"><span class="am-icon-trash-o"></span> 删除</a>
+	          		<%}%>
+	          		<input type="hidden" value="-1" id="id" >
+	          	</div>
+	        </div>
+      	</div>
+      	<!-- 左边，功能键结束 -->
+      	
+    </div>
+    <!-- 功能键和导航 结束 -->
+
+	<!-- 内容 开始 -->
+    <div class="am-g">
+		<div class="am-u-sm-3" style="border: 1px solid #e9ecf1;">
+	        <ul class="am-list admin-sidebar-list">
+		        ${tree}
+			</ul>
+		</div>
+		
+		<div class="am-u-sm-9" style="border: 1px solid #e9ecf1;">
+			<iframe id="content_in" name="content_in" 
+		  		width="100%" height="100%" 
+		  		src="${rootPath}/sys/menu/intro" 
+		  		style="overflow-x:hidden" 
+		  		scrolling="no" 
+		  		frameborder=0   onload="javascript:menuContSize('content_in');" ></iframe>		
+		</div>
+    </div>
+</div>
+<!-- content end -->
+
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="${rootPath}/assets/js/polyfill/rem.min.js"></script>
+<script src="${rootPath}/assets/js/polyfill/respond.min.js"></script>
+<script src="${rootPath}/assets/js/amazeui.legacy.js"></script>
+<![endif]-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="${rootPath}/assets/js/amazeui.min.js"></script>
+<!--<![endif]-->
+<script src="${rootPath}/assets/js/app.js"></script>
+<script type="text/javascript">
+function button( url ){
+	var id = $("#id").val() ;
+	if( id == -1 ) {
+		window.parent.tips( "请选择菜单" );
+		return false ;
+	}
+	window.open( url +"?id="+ id ,"content")
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,750 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>两只蜗牛 | 后台管理</title>
+  <meta name="description" content="两只蜗牛">
+  <meta name="keywords" content="twosnail">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="ext/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+
+
+<script type="text/javascript">
+  	function Layer_HideOrShow( cur_div ){
+		var current=document.getElementById(cur_div);  
+		if(current.style.display==""){  
+			current.style.display ="none";  
+		} else {
+			current.style.display ="";  
+  	    }  
+  	}
+  	function test(){
+  		$('#your-modal').modal('open');
+  	}
+  	
+  	
+  	
+  	function dyniframesize(down) {
+  		var pTar = null; 
+  		if (document.getElementById){ 
+  			pTar = document.getElementById(down); 
+  		}else{ 
+  			eval('pTar = ' + down + ';'); 
+  		} 
+  		if (pTar && !window.opera){ 
+  			//begin resizing iframe 
+  			pTar.style.display="block" 
+	  		if (pTar.contentDocument && pTar.contentDocument.body.offsetHeight){ 
+	  			//ns6 syntax 
+	  			pTar.height = pTar.contentDocument.body.offsetHeight +40; 
+	  			if( pTar.height < 660 ){
+	  				pTar.height = 660 ;
+	  			}
+	  			/* pTar.width = pTar.contentDocument.body.scrollWidth - 260;  */
+	  			pTar.width = document.documentElement.clientWidth - 260;
+	  		} else if (pTar.Document && pTar.Document.body.scrollHeight){ 
+	  			//ie5+ syntax 
+	  			pTar.height = pTar.Document.body.scrollHeight; 
+	  			pTar.width = pTar.Document.body.scrollWidth-280; 
+	  		} 
+  		} 
+	} 
+  	
+	/* window.onresize=function(){
+		document.getElementById('content').style.width=document.documentElement.clientWidth-260+"px";
+	} */
+
+</script>
+
+<body>
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<header class="am-topbar admin-header">
+  <div class="am-topbar-brand">
+    <strong>两只蜗牛</strong> <small>后台管理模板</small>
+    <span>
+    	<a href="#" class="" onclick="Layer_HideOrShow('admin-offcanvas');" >
+	      <i class="am-header-icon am-icon-bars"></i>
+	    </a>
+    </span>
+  </div>
+
+  <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+  <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+    <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+      <li><a href="javascript:;"><span class="am-icon-envelope-o"></span> 收件箱 <span class="am-badge am-badge-warning">5</span></a></li>
+      <li class="am-dropdown" data-am-dropdown>
+        <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+          <span class="am-icon-users"></span> ${userName!} <span class="am-icon-caret-down"></span>
+        </a>
+        <ul class="am-dropdown-content">
+          <li><a href="#"><span class="am-icon-user"></span> 资料</a></li>
+          <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
+          <li><a href="./logout"><span class="am-icon-power-off"></span> 退出</a></li>
+        </ul>
+      </li>
+      <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"><span class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+    <div class="am-offcanvas-bar admin-offcanvas-bar">
+      <ul class="am-list admin-sidebar-list">
+        <li><a href="./main"><span class="am-icon-home"></span> 首页</a></li>        
+        ${tree}
+        <li><a href="./logout"><span class="am-icon-sign-out"></span> 注销</a></li>
+      </ul>
+
+      <div class="am-panel am-panel-default admin-sidebar-panel">
+        <div class="am-panel-bd">
+          <p><span class="am-icon-bookmark"></span> 公告</p>
+          <p>路漫漫其修远兮，吾将上下而求索。—— 两只蜗牛</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- sidebar end -->
+
+  <!-- content start -->
+  <iframe id="content" name="content" 
+  		width="100%" height="100%" 
+  		src="content" 
+  		style="overflow-x:hidden" 
+  		scrolling="no" 
+  		frameborder=0   onload="javascript:dyniframesize('content');" ></iframe>
+  <!-- content end -->
+
+</div>
+
+<a class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+<footer>
+  <hr>
+  <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
+</footer>
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/polyfill/rem.min.js"></script>
+<script src="assets/js/polyfill/respond.min.js"></script>
+<script src="assets/js/amazeui.legacy.js"></script>
+<![endif]-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/amazeui.min.js"></script>
+<!--<![endif]-->
+<script src="assets/js/app.js"></script>
+<!-- modal -->
+	<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+	  <div class="am-modal-dialog">
+	    <div class="am-modal-hd"><span id="alert_title">温馨提示：</span></div>
+	    <div class="am-modal-bd">
+	      <span id="alert_info">twosnail 两只蜗牛</span>
+	    </div>
+	    <div class="am-modal-footer">
+	      <span class="am-modal-btn">确定</span>
+	    </div>
+	  </div>
+	</div>
+
+
+  <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+    <div class="am-modal-dialog">
+      <div class="am-modal-hd"><span id="confirm_title">温馨提示：</span></div>
+      <div class="am-modal-bd">
+        <span id="confirm_info">你，确定要删除这条记录吗？</span>
+      </div>
+      <div class="am-modal-footer">
+        <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+        <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+      </div>
+    </div>
+</div>
+
+<div class="am-modal am-modal-no-btn" style="width: 850px;" tabindex="-1" id="choseIco">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">点击图标选择
+      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd" id="div_setIoc">
+		<ul class="doc-icon-list" >
+			<li class="am-icon-bed" ></li>
+			<li class="am-icon-buysellads" ></li>
+			<li class="am-icon-cart-arrow-down" ></li>
+			<li class="am-icon-cart-plus" ></li>
+			<li class="am-icon-connectdevelop" ></li>
+			<li class="am-icon-dashcube" ></li>
+			<li class="am-icon-diamond" ></li>
+			<li class="am-icon-facebook-official" ></li>
+			<li class="am-icon-forumbee" ></li>
+			<li class="am-icon-heartbeat" ></li>
+			<li class="am-icon-hotel" ></li>
+			<li class="am-icon-leanpub" ></li>
+			<li class="am-icon-mars" ></li>
+			<li class="am-icon-mars-double" ></li>
+			<li class="am-icon-mars-stroke" ></li>
+			<li class="am-icon-mars-stroke-h" ></li>
+			<li class="am-icon-mars-stroke-v" ></li>
+			<li class="am-icon-medium" ></li>
+			<li class="am-icon-mercury" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-motorcycle" ></li>
+			<li class="am-icon-neuter" ></li>
+			<li class="am-icon-pinterest-p" ></li>
+			<li class="am-icon-sellsy" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-server" ></li>
+			<li class="am-icon-ship" ></li>
+			<li class="am-icon-shirtsinbulk" ></li>
+			<li class="am-icon-simplybuilt" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-skyatlas" ></li>
+			<li class="am-icon-street-view" ></li>
+			<li class="am-icon-subway" ></li>
+			<li class="am-icon-train" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-transgender" ></li>
+			<li class="am-icon-transgender-alt" ></li>
+			<li class="am-icon-user-plus" ></li>
+			<li class="am-icon-user-secret" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-user-times" ></li>
+			<li class="am-icon-venus" ></li>
+			<li class="am-icon-venus-double" ></li>
+			<li class="am-icon-venus-mars" ></li>
+			<li class="am-icon-viacoin" ></li>
+			<li class="am-icon-whatsapp" ></li>
+      </ul>
+      <ul class="doc-icon-list" >
+      		<li class="am-icon-angellist" ></li>
+			<li class="am-icon-area-chart" ></li>
+			<li class="am-icon-at" ></li>
+			<li class="am-icon-bell-slash" ></li>
+			<li class="am-icon-bell-slash-o" ></li>
+			<li class="am-icon-bicycle" ></li>
+			<li class="am-icon-binoculars" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-birthday-cake" ></li>
+			<li class="am-icon-bus" ></li>
+			<li class="am-icon-calculator" ></li>
+			<li class="am-icon-cc" ></li>
+			<li class="am-icon-cc-amex" ></li>
+			<li class="am-icon-cc-discover" ></li>
+			<li class="am-icon-cc-mastercard" ></li>
+			<li class="am-icon-cc-paypal" ></li>
+			<li class="am-icon-cc-stripe" ></li>
+			<li class="am-icon-cc-visa" ></li>
+			<li class="am-icon-copyright" ></li>
+			<li class="am-icon-eyedropper" ></li>
+			<li class="am-icon-futbol-o" ></li>
+			<li class="am-icon-google-wallet" ></li>
+			<li class="am-icon-ils" ></li>
+			<li class="am-icon-ioxhost" ></li>
+			<li class="am-icon-lastfm" ></li>
+			<li class="am-icon-lastfm-square" ></li>
+			<li class="am-icon-line-chart" ></li>
+			<li class="am-icon-meanpath" ></li>
+			<li class="am-icon-newspaper-o" ></li>
+			<li class="am-icon-paint-brush" ></li>
+			<li class="am-icon-paypal" ></li>
+			<li class="am-icon-pie-chart" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-plug" ></li>
+			<li class="am-icon-shekel" ></li>
+			<li class="am-icon-sheqel" ></li>
+			<li class="am-icon-slideshare" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-soccer-ball-o" ></li>
+			<li class="am-icon-toggle-off" ></li>
+			<li class="am-icon-toggle-on" ></li>
+			<li class="am-icon-trash" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-tty" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-twitch" ></li>
+			<li class="am-icon-wifi" ></li>
+			<li class="am-icon-yelp" ></li>
+      </ul>
+      <ul class="doc-icon-list" >
+      		<li class="am-icon-file" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-file-archive-o" ></li>
+			<li class="am-icon-file-audio-o" ></li>
+			<li class="am-icon-file-code-o" ></li>
+			<li class="am-icon-file-excel-o" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-file-image-o" ></li>
+			<li class="am-icon-file-movie-o" ></li>
+			<li class="am-icon-file-o" ></li>
+			<li class="am-icon-file-pdf-o" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-file-photo-o" ></li>
+			<li class="am-icon-file-picture-o " ></li>
+			<li class="am-icon-file-powerpoint-o" ></li>
+			<li class="am-icon-file-sound-o" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-file-text" ></li>
+			<li class="am-icon-file-text-o" ></li>
+			<li class="am-icon-file-video-o" ></li>
+			<li class="am-icon-file-word-o" ></li>
+			<li class="am-icon-file-zip-o" ></li>
+      </ul>
+      <ul class="doc-icon-list" >
+      		<li class="am-icon-align-center" ></li>
+			<li class="am-icon-align-justify" ></li>
+			<li class="am-icon-align-left" ></li>
+			<li class="am-icon-align-right" ></li>
+			<li class="am-icon-bold" ></li>
+			<li class="am-icon-chain" ></li>
+			<li class="am-icon-chain-broken" ></li>
+			<li class="am-icon-clipboard" ></li>
+			<li class="am-icon-columns" ></li>
+			<li class="am-icon-copy" ></li>
+			<li class="am-icon-cut" ></li>
+			<li class="am-icon-dedent" ></li>
+			<li class="am-icon-eraser" ></li>
+			<li class="am-icon-file" ></li>
+			<li class="am-icon-file-o" ></li>
+			<li class="am-icon-file-text" ></li>
+			<li class="am-icon-file-text-o" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-files-o" ></li>
+			<li class="am-icon-floppy-o" ></li>
+			<li class="am-icon-font" ></li>
+			<li class="am-icon-header" ></li>
+			<li class="am-icon-indent" ></li>
+			<li class="am-icon-italic" ></li>
+			<li class="am-icon-link" ></li>
+			<li class="am-icon-list" ></li>
+			<li class="am-icon-list-alt" ></li>
+			<li class="am-icon-list-ol" ></li>
+			<li class="am-icon-list-ul" ></li>
+			<li class="am-icon-outdent" ></li>
+			<li class="am-icon-paperclip" ></li>
+			<li class="am-icon-paragraph" ></li>
+			<li class="am-icon-paste" ></li>
+			<li class="am-icon-repeat" ></li>
+			<li class="am-icon-rotate-left" ></li>
+			<li class="am-icon-rotate-right" ></li>
+			<li class="am-icon-save" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-scissors" ></li>
+			<li class="am-icon-strikethrough" ></li>
+			<li class="am-icon-subscript" ></li>
+			<li class="am-icon-superscript" ></li>
+			<li class="am-icon-table" ></li>
+			<li class="am-icon-text-height" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-text-width" ></li>
+			<li class="am-icon-th" ></li>
+			<li class="am-icon-th-large" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-th-list" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-underline" ></li>
+			<li class="am-icon-undo" ></li>
+			<li class="am-icon-unlink" ></li>
+      </ul>
+		<ul class="doc-icon-list" >
+      		<li class="am-icon-adjust" ></li>
+			<li class="am-icon-anchor" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-archive" ></li>
+			<li class="am-icon-area-chart" ></li>
+			<li class="am-icon-arrows" ></li>
+			<li class="am-icon-arrows-h" ></li>
+			<li class="am-icon-arrows-v" ></li>
+			<li class="am-icon-asterisk" ></li>
+			<li class="am-icon-at" ></li>
+			<li class="am-icon-automobile" ></li>
+			<li class="am-icon-ban" ></li>
+			<li class="am-icon-bank" ></li>
+			<li class="am-icon-bar-chart" ></li>
+			<li class="am-icon-bar-chart-o" ></li>
+			<li class="am-icon-barcode" ></li>
+			<li class="am-icon-bars" ></li>
+			<li class="am-icon-beer" ></li>
+			<li class="am-icon-bell" ></li>
+			<li class="am-icon-bell-o" ></li>
+			<li class="am-icon-bell-slash" ></li>
+			<li class="am-icon-bell-slash-o" ></li>
+			<li class="am-icon-bicycle" ></li>
+			<li class="am-icon-binoculars" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-birthday-cake" ></li>
+			<li class="am-icon-bolt" ></li>
+			<li class="am-icon-bomb" ></li>
+			<li class="am-icon-book" ></li>
+			<li class="am-icon-bookmark" ></li>
+			<li class="am-icon-bookmark-o" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-briefcase" ></li>
+			<li class="am-icon-bug" ></li>
+			<li class="am-icon-building" ></li>
+			<li class="am-icon-building-o" ></li>
+			<li class="am-icon-bullhorn" ></li>
+			<li class="am-icon-bullseye" ></li>
+			<li class="am-icon-bus" ></li>
+			<li class="am-icon-cab" ></li>
+			<li class="am-icon-calculator" ></li>
+			<li class="am-icon-calendar" ></li>
+			<li class="am-icon-calendar-o" ></li>
+			<li class="am-icon-camera" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-camera-retro" ></li>
+			<li class="am-icon-car" ></li>
+			<li class="am-icon-caret-square-o-down" ></li>
+			<li class="am-icon-caret-square-o-left" ></li>
+			<li class="am-icon-caret-square-o-right" ></li>
+			<li class="am-icon-caret-square-o-up" ></li>
+			<li class="am-icon-cc" ></li>
+			<li class="am-icon-certificate" ></li>
+			<li class="am-icon-check" ></li>
+			<li class="am-icon-check-circle" ></li>
+			<li class="am-icon-check-circle-o" ></li>
+			<li class="am-icon-check-square" ></li>
+			<li class="am-icon-check-square-o" ></li>
+			<li class="am-icon-child" ></li>
+			<li class="am-icon-circle" ></li>
+			<li class="am-icon-circle-o" ></li>
+			<li class="am-icon-circle-o-notch" ></li>
+			<li class="am-icon-circle-thin" ></li>
+			<li class="am-icon-clock-o" ></li>
+			<li class="am-icon-close" ></li>
+			<li class="am-icon-cloud" ></li>
+			<li class="am-icon-cloud-download" ></li>
+			<li class="am-icon-cloud-upload" ></li>
+			<li class="am-icon-code-fork" ></li>
+			<li class="am-icon-coffee" ></li>
+			<li class="am-icon-cog" ></li>
+			<li class="am-icon-cogs" ></li>
+			<li class="am-icon-comment" ></li>
+			<li class="am-icon-comment-o" ></li>
+			<li class="am-icon-comments" ></li>
+			<li class="am-icon-comments-o" ></li>
+			<li class="am-icon-compass" ></li>
+			<li class="am-icon-copyright" ></li>
+			<li class="am-icon-credit-card" ></li>
+			<li class="am-icon-crop" ></li>
+			<li class="am-icon-crosshairs" ></li>
+			<li class="am-icon-cube" ></li>
+			<li class="am-icon-cubes" ></li>
+			<li class="am-icon-cutlery" ></li>
+			<li class="am-icon-dashboard" ></li>
+			<li class="am-icon-database" ></li>
+			<li class="am-icon-desktop" ></li>
+			<li class="am-icon-dot-circle-o" ></li>
+			<li class="am-icon-download" ></li>
+			<li class="am-icon-edit" ></li>
+			<li class="am-icon-ellipsis-h" ></li>
+			<li class="am-icon-ellipsis-v" ></li>
+			<li class="am-icon-envelope" ></li>
+			<li class="am-icon-envelope-o" ></li>
+			<li class="am-icon-envelope-square" ></li>
+			<li class="am-icon-eraser" ></li>
+			<li class="am-icon-exchange" ></li>
+			<li class="am-icon-exclamation" ></li>
+			<li class="am-icon-exclamation-circle" ></li>
+			<li class="am-icon-exclamation-triangle" ></li>
+			<li class="am-icon-external-link" ></li>
+			<li class="am-icon-external-link-square" ></li>
+			<li class="am-icon-eye" ></li>
+			<li class="am-icon-eye-slash" ></li>
+			<li class="am-icon-eyedropper" ></li>
+			<li class="am-icon-fax" ></li>
+			<li class="am-icon-female" ></li>
+			<li class="am-icon-fighter-jet" ></li>
+			<li class="am-icon-file-archive-o" ></li>
+			<li class="am-icon-file-audio-o" ></li>
+			<li class="am-icon-file-code-o" ></li>
+			<li class="am-icon-file-excel-o" ></li>
+			<li class="am-icon-file-image-o" ></li>
+			<li class="am-icon-file-movie-o" ></li>
+			<li class="am-icon-file-pdf-o" ></li>
+			<li class="am-icon-file-photo-o" ></li>
+			<li class="am-icon-file-picture-o" ></li>
+			<li class="am-icon-file-powerpoint-o" ></li>
+			<li class="am-icon-file-sound-o" ></li>
+			<li class="am-icon-file-video-o" ></li>
+			<li class="am-icon-file-word-o" ></li>
+			<li class="am-icon-file-zip-o" ></li>
+			<li class="am-icon-film" ></li>
+			<li class="am-icon-filter" ></li>
+			<li class="am-icon-fire" ></li>
+			<li class="am-icon-fire-extinguisher" ></li>
+			<li class="am-icon-flag" ></li>
+			<li class="am-icon-flag-checkered" ></li>
+			<li class="am-icon-flag-o" ></li>
+			<li class="am-icon-flash" ></li>
+			<li class="am-icon-flask" ></li>
+			<li class="am-icon-folder" ></li>
+			<li class="am-icon-folder-o" ></li>
+			<li class="am-icon-folder-open" ></li>
+			<li class="am-icon-folder-open-o" ></li>
+			<li class="am-icon-frown-o" ></li>
+			<li class="am-icon-futbol-o" ></li>
+			<li class="am-icon-gamepad" ></li>
+			<li class="am-icon-gavel" ></li>
+			<li class="am-icon-gear" ></li>
+			<li class="am-icon-gears" ></li>
+			<li class="am-icon-gift" ></li>
+			<li class="am-icon-glass" ></li>
+			<li class="am-icon-globe" ></li>
+			<li class="am-icon-graduation-cap" ></li>
+			<li class="am-icon-group" ></li>
+			<li class="am-icon-hdd-o" ></li>
+			<li class="am-icon-headphones" ></li>
+			<li class="am-icon-heart" ></li>
+			<li class="am-icon-heart-o" ></li>
+			<li class="am-icon-history" ></li>
+			<li class="am-icon-home" ></li>
+			<li class="am-icon-image" ></li>
+			<li class="am-icon-inbox" ></li>
+			<li class="am-icon-info" ></li>
+			<li class="am-icon-info-circle" ></li>
+			<li class="am-icon-institution" ></li>
+			<li class="am-icon-key" ></li>
+			<li class="am-icon-keyboard-o" ></li>
+			<li class="am-icon-language" ></li>
+			<li class="am-icon-laptop" ></li>
+			<li class="am-icon-leaf" ></li>
+			<li class="am-icon-legal" ></li>
+			<li class="am-icon-lemon-o" ></li>
+			<li class="am-icon-level-down" ></li>
+			<li class="am-icon-level-up" ></li>
+			<li class="am-icon-life-bouy" ></li>
+			<li class="am-icon-life-buoy" ></li>
+			<li class="am-icon-life-ring" ></li>
+			<li class="am-icon-life-saver" ></li>
+			<li class="am-icon-lightbulb-o" ></li>
+			<li class="am-icon-line-chart" ></li>
+			<li class="am-icon-location-arrow" ></li>
+			<li class="am-icon-lock" ></li>
+			<li class="am-icon-magic" ></li>
+			<li class="am-icon-magnet" ></li>
+			<li class="am-icon-mail-forward" ></li>
+			<li class="am-icon-mail-reply" ></li>
+			<li class="am-icon-mail-reply-all" ></li>
+			<li class="am-icon-male" ></li>
+			<li class="am-icon-map-marker" ></li>
+			<li class="am-icon-meh-o" ></li>
+			<li class="am-icon-microphone" ></li>
+			<li class="am-icon-microphone-slash" ></li>
+			<li class="am-icon-minus" ></li>
+			<li class="am-icon-minus-circle" ></li>
+			<li class="am-icon-minus-square" ></li>
+			<li class="am-icon-minus-square-o" ></li>
+			<li class="am-icon-mobile" ></li>
+			<li class="am-icon-mobile-phone" ></li>
+			<li class="am-icon-money" ></li>
+			<li class="am-icon-moon-o" ></li>
+			<li class="am-icon-mortar-board" ></li>
+			<li class="am-icon-music" ></li>
+			<li class="am-icon-navicon" ></li>
+			<li class="am-icon-newspaper-o" ></li>
+			<li class="am-icon-paint-brush" ></li>
+			<li class="am-icon-paper-plane" ></li>
+			<li class="am-icon-paper-plane-o" ></li>
+			<li class="am-icon-paw" ></li>
+			<li class="am-icon-pencil" ></li>
+			<li class="am-icon-pencil-square" ></li>
+			<li class="am-icon-pencil-square-o" ></li>
+			<li class="am-icon-phone" ></li>
+			<li class="am-icon-phone-square" ></li>
+			<li class="am-icon-photo" ></li>
+			<li class="am-icon-picture-o" ></li>
+			<li class="am-icon-pie-chart" ></li>
+			<li class="am-icon-plane" ></li>
+			<li class="am-icon-plug" ></li>
+			<li class="am-icon-plus" ></li>
+			<li class="am-icon-plus-circle" ></li>
+			<li class="am-icon-plus-square" ></li>
+			<li class="am-icon-plus-square-o" ></li>
+			<li class="am-icon-power-off" ></li>
+			<li class="am-icon-print" ></li>
+			<li class="am-icon-puzzle-piece" ></li>
+			<li class="am-icon-qrcode" ></li>
+			<li class="am-icon-question" ></li>
+			<li class="am-icon-question-circle" ></li>
+			<li class="am-icon-quote-left" ></li>
+			<li class="am-icon-quote-right" ></li>
+			<li class="am-icon-random" ></li>
+			<li class="am-icon-recycle" ></li>
+			<li class="am-icon-refresh" ></li>
+			<li class="am-icon-remove" ></li>
+			<li class="am-icon-reorder" ></li>
+			<li class="am-icon-reply" ></li>
+			<li class="am-icon-reply-all" ></li>
+			<li class="am-icon-retweet" ></li>
+			<li class="am-icon-road" ></li>
+			<li class="am-icon-rocket" ></li>
+			<li class="am-icon-rss" ></li>
+			<li class="am-icon-rss-square" ></li>
+			<li class="am-icon-search" ></li>
+			<li class="am-icon-search-minus" ></li>
+			<li class="am-icon-search-plus" ></li>
+			<li class="am-icon-send" ></li>
+			<li class="am-icon-send-o" ></li>
+			<li class="am-icon-share" ></li>
+			<li class="am-icon-share-alt" ></li>
+			<li class="am-icon-share-alt-square" ></li>
+			<li class="am-icon-share-square" ></li>
+			<li class="am-icon-share-square-o" ></li>
+			<li class="am-icon-shield" ></li>
+			<li class="am-icon-shopping-cart" ></li>
+			<li class="am-icon-sign-in" ></li>
+			<li class="am-icon-sign-out" ></li>
+			<li class="am-icon-signal" ></li>
+			<li class="am-icon-sitemap" ></li>
+			<li class="am-icon-sliders" ></li>
+			<li class="am-icon-smile-o" ></li>
+			<li class="am-icon-soccer-ball-o" ></li>
+			<li class="am-icon-sort" ></li>
+			<li class="am-icon-sort-alpha-asc" ></li>
+			<li class="am-icon-sort-alpha-desc" ></li>
+			<li class="am-icon-sort-amount-asc" ></li>
+			<li class="am-icon-sort-amount-desc" ></li>
+			<li class="am-icon-sort-asc" ></li>
+			<li class="am-icon-sort-desc" ></li>
+			<li class="am-icon-sort-down" ></li>
+			<li class="am-icon-sort-numeric-asc" ></li>
+			<li class="am-icon-sort-numeric-desc" ></li>
+			<li class="am-icon-sort-up" ></li>
+			<li class="am-icon-space-shuttle" ></li>
+			<li class="am-icon-spinner" ></li>
+			<li class="am-icon-spoon" ></li>
+			<li class="am-icon-square" ></li>
+			<li class="am-icon-square-o" ></li>
+			<li class="am-icon-star" ></li>
+			<li class="am-icon-star-half" ></li>
+			<li class="am-icon-star-half-empty" ></li>
+			<li class="am-icon-star-half-full" ></li>
+			<li class="am-icon-star-half-o" ></li>
+			<li class="am-icon-star-o" ></li>
+			<li class="am-icon-suitcase" ></li>
+			<li class="am-icon-sun-o" ></li>
+			<li class="am-icon-support" ></li>
+			<li class="am-icon-tablet" ></li>
+			<li class="am-icon-tachometer" ></li>
+			<li class="am-icon-tag" ></li>
+			<li class="am-icon-tags" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-tasks" ></li>
+			<li class="am-icon-taxi" ></li>
+			<li class="am-icon-terminal" ></li>
+			<li class="am-icon-thumb-tack" ></li>
+			<li class="am-icon-thumbs-down" ></li>
+			<li class="am-icon-thumbs-o-down" ></li>
+			<li class="am-icon-thumbs-o-up" ></li>
+			<li class="am-icon-thumbs-up" ></li>
+			<li class="am-icon-ticket" ></li>
+			<li class="am-icon-times" ></li>
+			<li class="am-icon-times-circle" ></li>
+			<li class="am-icon-times-circle-o" ></li>
+			<li class="am-icon-tint" ></li>
+			<li class="am-icon-toggle-down" ></li>
+			<li class="am-icon-toggle-left" ></li>
+			<li class="am-icon-toggle-off" ></li>
+			<li class="am-icon-toggle-on" ></li>
+			<li class="am-icon-toggle-right" ></li>
+			<li class="am-icon-toggle-up" ></li>
+			<li class="am-icon-trash" ></li>
+			<li class="am-icon-trash-o" ></li>
+			<li class="am-icon-tree" ></li>
+			<li class="am-icon-trophy" ></li>
+			<li class="am-icon-truck" ></li>
+			<li class="am-icon-tty" ></li>
+			<li class="am-icon-umbrella" ></li>
+			<li class="am-icon-university" ></li>
+			<li class="am-icon-unlock" ></li>
+			<li class="am-icon-unlock-alt" ></li>
+			<li class="am-icon-unsorted" ></li>
+			<li class="am-icon-upload" ></li>
+			<li class="am-icon-user" ></li>
+			<li class="am-icon-users" ></li>
+			<li class="am-icon-video-camera" ></li>
+			<li class="am-icon-volume-down" ></li>
+			<li class="am-icon-volume-off" ></li>
+			<li class="am-icon-volume-up" ></li>
+			<li class="am-icon-warning" ></li>
+			<li class="am-icon-wheelchair" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-wifi" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-wrench" ></li>
+      </ul>
+		<ul class="doc-icon-list" >
+      		<li class="am-icon-ambulance" ></li>
+			<li class="am-icon-h-square" ></li>
+			<li class="am-icon-hospital-o" ></li>
+			<li class="am-icon-medkit" ></li>
+			<li class="am-icon-plus-square" ></li>
+			<li class="am-icon-stethoscope" ></li>
+			<li class="am-icon-user-md" ></li>
+			<li class="am-icon-wheelchair" ></li>
+			<li class="am-icon-area-chart" ></li>
+			<li class="am-icon-classstyle" ></li>
+			<li class="am-icon-bar-chart" ></li>
+			<li class="am-icon-bar-chart-o" ></li>
+			<li class="am-icon-line-chart" ></li>
+			<li class="am-icon-pie-chart" ></li>
+			<li class="am-icon-circle-o-notch" ></li>
+			<li class="am-icon-cog" ></li>
+			<li class="am-icon-gear" ></li>
+			<li class="am-icon-refresh" ></li>
+			<li class="am-icon-spinner" ></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- modal end -->
+
+</body>
+<script type="text/javascript">
+//提示框
+function tips( title , info ){
+	$('#alert_title').html(title) ;
+	if( info == null || info == '' ){
+		$('#alert_info').hide();
+	}
+	$('#my-alert').modal('open');
+}
+//菜单选择图标
+function choseIco(){
+	$('#choseIco').modal('open');
+}
+//监听图标点击事件
+$("#div_setIoc").ready(function(){
+	$("#div_setIoc li").click(function(){
+		var value = $(this).attr('class') ;
+		content.window.content_in.window.setStyle( value ); 
+		$('#choseIco').modal('close');
+	});
+});
+$("#my-confirm").ready(function(){
+	$('#my-confirm').on('closed.modal.amui', function() {
+		alert('remove');
+		$(this).removeData('amui.modal');
+	});
+});
+</script>
+</html>

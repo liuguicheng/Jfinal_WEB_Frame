@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>两只蜗牛|基础架构平台</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="alternate icon" type="image/png" href="ext/i/favicon.png">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+  <script type="text/javascript" src="ext/js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="ext/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="ext/js/jquery.md5.js"></script>
+  <style>
+    .header {
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 200%;
+      color: #333;
+      margin-top: 30px;
+    }
+    .header p {
+      font-size: 14px;
+    }
+  </style>
+	<script type="text/javascript">
+	$(function(){
+		var errorMsg = $( "#error_msg" );
+		var form = $( "form[name='login']" );
+		form.submit( function () {
+			var loginName = $( "input[name='loginName']" );
+			var password = $( "input[name='password']" );
+			var isRemember = false ;
+			if($('#isRemember').is(':checked')) {
+				isRemember = true ;
+			}
+			var code = $( "input[name='code']" );
+			if( loginName.val() == '' ) {
+				errorMsg.text( "请输入用户名！" );
+				return false;
+			}
+			if( password.val() == '' ) {
+				errorMsg.text( "请输入密码！" );
+				return false;
+			}
+			if( code.val() == '' ) {
+				errorMsg.text( "请输入验证码！" );
+				return false;
+			}
+			$.post( form.attr( "action" ), { 
+					"loginName":loginName.val(), 
+					"password":$.md5( $.md5( password.val() ) ), 
+					"code":code.val() ,
+					"isRemember":isRemember
+				}, function ( data ) {
+					if( data.status == 1 ) {
+						location.href="./main";
+					} else {
+						errorMsg.text( data.msg );
+						refushcode();
+					}
+			}, "json" );
+			return false;
+		} );
+	});
+	
+	function refushcode(){
+        //为了避免服务器或者浏览器缓存，添加了一个额外的参数
+        $( "#code_imge" ).attr( "src", "./img?t=" + new Date().getTime() );
+    }
+	</script>
+		
+</head>
+<body>
+<br/>
+<br/>
+<br/>
+<div class="header">
+  <div class="am-g">
+    <h1>两只蜗牛 | 基础架构平台</h1>
+    <p>为自由而生<br/>坚信，存在的就是合理的！不抱怨，不言弃！</p>
+  </div>
+  <hr />
+</div>
+<div class="am-g">
+  <div class="am-u-lg-5 am-u-md-6 am-u-sm-centered">
+
+	<form  name="login" id="login" action="./check" method="post"  class="am-form  am-form-horizontal">
+		<div class="am-g">
+			<br>
+			<div class="am-form-group">
+				<label for="loginName" class="am-u-sm-2 am-form-label">账号:</label>
+				<div class="am-u-sm-10">
+					<input type="text" name="loginName" id="loginName"  value="" placeholder="输入账号 ">
+				</div>
+			</div>
+			<br>
+			<div class="am-form-group">
+				<label for="password" class="am-u-sm-2 am-form-label">密码:</label>
+				<div class="am-u-sm-10">
+      				<input type="password" name="password" id="password" value="" placeholder="输入密码 ">
+      			</div>
+			</div>
+			<br>
+			<div class="am-form-group">
+				<label for="code"  class="am-u-sm-2 am-form-label" >验证码:</label> 
+				<div class="am-u-sm-7">
+					<input name="code" id="code" class="code form-control x200 in" type="text" placeholder="输入验证码"/>
+				</div>
+				<div class="am-u-sm-3">
+					<span><img id="code_imge" src="./img" width="120" height="42" class="am-fr" onclick="refushcode()" /></span>
+				</div>
+			</div>
+			<br>
+			<div class="am-form-group">
+				<div class="am-u-sm-2 am-u-md-push-2">
+					<input type="submit" name="" value="登 录" class=" am-btn am-btn-primary am-btn-sm am-fl ">
+				</div>
+				<div class="am-u-sm-5  am-u-md-push-3">
+					<span id="error_msg" style="text-align: center;color: red;"></span>
+				</div>
+				<div class="am-u-sm-3" style="text-align: right;line-height: 0px;">
+					<label class="am-radio-inline">
+		                <input type="checkbox" value="true" id="isRemember"> 记住密码
+		            </label>
+		        </div>
+			</div>
+			<br>
+		</div>
+		
+    </form>
+    <hr>
+    <p>© 2015 AllMobilize, Inc. Licensed under MIT license.<a href="#">忘记密码</a></p>
+  </div>
+</div>
+</body>
+</html>

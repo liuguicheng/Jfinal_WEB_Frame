@@ -1,0 +1,103 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<link rel="stylesheet" href="${rootPath!''}/assets/css/amazeui.min.css"/>
+	<link rel="stylesheet" href="${rootPath!''}/assets/css/admin.css">
+</head>
+<script src="${rootPath!''}/ext/js/jquery-1.7.2.min.js"></script>
+<body style="width: 100%;height: 100%;">
+
+<!-- content start -->
+<div class="admin-content">
+
+	<!-- 导航 开始 -->
+    <div class="am-cf am-padding">
+		<div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">表格</strong> / <small>Table</small></div>
+    </div>
+    <!-- 导航 结束 -->
+
+    <!-- 功能键和导航 开始 -->
+    <div class="am-g">
+
+    	<!-- 左边，功能键开始 -->
+      	<div class="am-u-sm-12 am-u-md-6">
+	        <div class="am-btn-toolbar">
+	          	<div class="am-btn-group am-btn-group-xs">
+	            	<%if(so.hasPermission("LoginLogController.dellogin")){%>
+	            		<button onclick="del('');" type="button" class="am-btn am-btn-danger"><span class="am-icon-trash-o"></span> 删除</button>
+	          		<%}%>
+	          	</div>
+	        </div>
+      	</div>
+      	<!-- 左边，功能键结束 -->
+
+      	<!-- 右边，搜索 开始 -->
+      	<form action="${rootPath}/sys/log/login" method="get">
+	      	<div class="am-u-sm-12 am-u-md-3">
+	        	<div class="am-input-group am-input-group-sm">
+	          		<input type="text" class="am-form-field" id="keyWord" name="keyWord" value="${keyWord!}">
+	          		<span class="am-input-group-btn">
+	            		<button class="am-btn am-btn-default" type="submit">搜索</button>
+	          		</span>
+	        	</div>
+	      	</div>
+      	</form>
+      	<!-- 搜索 结束-->
+    </div>
+    <!-- 功能键和导航 结束 -->
+
+	<!-- 内容 开始 -->
+    <div class="am-g">
+		<div class="am-u-sm-12">
+
+	        <form class="am-form">
+	          	<table class="am-table am-table-striped am-table-hover table-main">
+		            <thead>
+		            	<tr>
+							<th class="table-check"><input type="checkbox" onclick="checkbox( this.checked ,'checkbox_list')" /></th>
+							<th class="table-id">ID</th>
+							<th class="table-id">name</th>
+						</tr>
+		            </thead>
+					<tbody>
+						<%
+						for(data in list.list){
+						%>
+							<tr>
+								<td><input type="checkbox" value="${data.id}" class="checkbox_list" /></td>
+					            <td> ${data.id} </td>
+					             <td> ${data.name} </td>
+							</tr>
+						<%}%>
+					</tbody>
+	        	</table>
+	        </form>
+
+	        <!-- 分页 开始 -->
+			<div class="am-cf" id="page"><input type="hidden" id="pageValue" value="${list.totalRow}_${list.pageSize}_${list.pageNumber}_5_${rootPath}/business/customerservicecontact"> </div>
+			<!-- 分页 结束 -->
+	        
+		</div>
+    </div>
+</div>
+<!-- content end -->
+
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="${rootPath}/assets/js/polyfill/rem.min.js"></script>
+<script src="${rootPath}/assets/js/polyfill/respond.min.js"></script>
+<script src="${rootPath}/assets/js/amazeui.legacy.js"></script>
+<![endif]-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="${rootPath}/assets/js/amazeui.min.js"></script>
+<!--<![endif]-->
+<script src="${rootPath}/assets/js/app.js"></script>
+<script src="${rootPath}/ext/js/page.js"></script>
+<script type="text/javascript">
+	
+</script>
+</body>
+</html>

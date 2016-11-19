@@ -1,0 +1,66 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<link rel="stylesheet" href="${rootPath}/assets/css/amazeui.min.css"/>
+	<link rel="stylesheet" href="${rootPath}/assets/css/admin.css">
+<script type="text/javascript" src="${rootPath}/ext/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="${rootPath}/ext/js/jquery.md5.js"></script>
+<script type="text/javascript">
+//表单提交
+function save(){
+	var info = $("form").serialize();
+	$.post( "${rootPath}/sys/role/permission", info , function ( data ) {
+			if ( data.status == 1 ) {
+				window.location.href="${rootPath}/sys/role/";
+			} else {
+				window.top.tips( data.msg );
+			}
+	}, "json" );
+}
+
+</script>
+</head>
+<body>
+<!-- content start -->
+<div class="admin-content">
+    <div class="am-cf am-padding">
+      	<div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">授权</strong> / <small>Permission</small></div>
+    </div>
+    <div class="am-g">
+		<form class="am-form am-form-horizontal">
+			<input type="hidden" value="${id}" name="id" id="id">
+			<table class="am-table .am-table-bordered .am-table-radius ">
+			    <tbody>
+			        ${permission}
+			    </tbody>
+			</table>
+			
+			<div class="am-form-group">
+	            <div class="am-u-sm-3 am-u-sm-push-3">
+	              	<button type="button" onclick="history.go(-1);" class="am-btn am-btn-primary"><span class="am-icon-arrow-left"></span> 返回</button>
+	            </div>
+	            
+	            <div class="am-u-sm-6">
+	              	<button type="button" onclick="save()" class="am-btn am-btn-primary"><span class="am-icon-save"></span> 保存 </button>
+	            </div>
+	        </div>
+	     </form>
+    </div>
+</div>
+<!-- content end -->
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="${rootPath}/assets/js/polyfill/rem.min.js"></script>
+<script src="${rootPath}/assets/js/polyfill/respond.min.js"></script>
+<script src="${rootPath}/assets/js/amazeui.legacy.js"></script>
+<![endif]-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="${rootPath}/assets/js/jquery.min.js"></script>
+<script src="${rootPath}/assets/js/amazeui.min.js"></script>
+<!--<![endif]-->
+<script src="${rootPath}/assets/js/app.js"></script>
+</body>
+</html>

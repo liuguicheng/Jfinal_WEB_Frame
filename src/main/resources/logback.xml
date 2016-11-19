@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="true">
+	
+	<property name="APP_Name" value="myAppName" />   
+	<contextName>${APP_Name}</contextName>  
+
+	<!-- 打印到控制台 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">   
+	    <!-- encoder 格式 -->
+	    <encoder>   
+	      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>   
+	    </encoder>   
+	</appender>
+	
+
+	<logger name="org.apache.http" level="WARN" />
+	<logger name="org.apache.shiro" level="WARN" />
+	<logger name="org.eclipse.jetty" level="WARN" />
+	<logger name="com.jfinal" level="WARN" />
+	<logger name="net.sf.ehcache" level="INFO" />
+	
+
+
+	<root level="DEBUG">
+		<appender-ref ref="console" />
+	</root>
+</configuration>

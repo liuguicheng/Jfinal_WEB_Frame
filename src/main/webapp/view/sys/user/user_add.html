@@ -1,0 +1,184 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<link rel="stylesheet" href="${rootPath}/assets/css/amazeui.min.css"/>
+	<link rel="stylesheet" href="${rootPath}/assets/css/admin.css">
+<script type="text/javascript">
+//表单提交
+function save(){
+	if( $( "input[name='sysUser.userName']" ).val() == '' ) {
+		window.top.tips( "用户名不能为空！" );
+		$("input[name='sysUser.userName']").focus() ;
+		return ;
+	}
+	if( $( "#roleId" ).val() == '' ) {
+		window.top.tips( "角色信息，不能为空！" );
+		$("#roleId").focus() ;
+		return ;
+	}
+	
+	if( $( "#passWord" ).val() == '' ) {
+		window.top.tips( "密码不能为空！" );
+		$("#passWord").focus() ;
+		return ;
+	}else{
+		$("input[name='sysUser.passWord']").val( $.md5( $.md5( $( "#passWord" ).val() ) ) );
+	}
+	var sysUser = $("form").serialize();
+	$.post( "${rootPath}/sys/user/addsave", sysUser , function ( data ) {
+			if ( data.status == 1 ) {
+				location.href="../../sys/user/";
+			} else {
+				window.top.tips( data.msg );
+			}
+	}, "json" );
+}
+
+</script>
+</head>
+<body>
+<!-- content start -->
+<div class="admin-content">
+    <div class="am-cf am-padding">
+      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">个人资料</strong> / <small>Personal information</small></div>
+    </div>
+    <hr/>
+    <div class="am-g">
+	<form class="am-form am-form-horizontal" id="form-with-tooltip">
+	 <div class="am-u-sm-12 am-u-md-6 am-u-md-push-6">
+        
+        <div class="am-form-group">
+           <label for="mobile" class="am-u-sm-3 am-form-label">手机号码 </label>
+           <div class="am-u-sm-9">
+             <input type="text" name="sysUser.mobile" placeholder="输入你的电话号码 ">
+           </div>
+        </div>        
+
+		<div class="am-form-group">
+		 	<label for="birthday" class="am-u-sm-3 am-form-label">生日</label>
+			<div class="am-u-sm-9">
+			  <input type="text" name="sysUser.birthday" class="am-form-field" placeholder="点击，请选择" data-am-datepicker="{theme: 'success'}" readonly/>
+			</div>
+		 </div>
+		 
+		 <div class="am-form-group">
+		 	<label for="user-role" class="am-u-sm-3 am-form-label">角色</label>
+		 	<div class="am-u-sm-9">
+			 	<select name='sysUser.roleId' id='roleId' data-foolish-msg="角色,不能为空" required >
+					<%for(role in roles){%>
+						<option value="${role.id}" >${role.roleName!}</option>
+					<%}%>
+			 	</select>
+      		</div>
+		 </div>
+		 
+		 <div class="am-form-group">
+			<label for="user-role" class="am-u-sm-3 am-form-label">性别</label>
+			 <div class="am-u-sm-9">			      
+	              <label class="am-radio-inline">
+	                <input type="radio" value="1" checked="checked" name="sysUser.sex"> 男
+	              </label>
+	              <label class="am-radio-inline">
+	                <input type="radio" value="0" name="sysUser.sex"> 女
+	              </label>
+			</div>
+		</div>
+		
+		<div class="am-form-group">
+			<label for="user-role" class="am-u-sm-3 am-form-label">状态</label>
+			 <div class="am-u-sm-9">			      
+	              <label class="am-radio-inline">
+	                <input type="radio" value="1" checked="checked" name="sysUser.isUsed" > 正常
+	              </label>
+	              <label class="am-radio-inline">
+	                <input type="radio" value="0" name="sysUser.isUsed"> 无效
+	              </label>
+			</div>
+		</div>
+		 
+      </div>
+      
+      <div class="am-u-sm-12 am-u-md-6 am-u-md-pull-6">
+        
+          <div class="am-form-group">
+            <label for="userName" class="am-u-sm-3 am-form-label">姓名</label>
+            <div class="am-u-sm-9">
+              <input type="text" name="sysUser.userName" data-foolish-msg="姓名,不能为空！" required placeholder="输入你的名字，让我们记住你。">
+            </div>
+          </div>
+
+          <div class="am-form-group">
+            <label for="email" class="am-u-sm-3 am-form-label">电子邮件</label>
+            <div class="am-u-sm-9">
+              <input type="email" id="email" name="sysUser.email" placeholder="邮箱你懂得...">
+            </div>
+          </div>
+          
+          <div class="am-form-group">
+            <label for="passWord" class="am-u-sm-3 am-form-label">用户名密码</label>
+            <div class="am-u-sm-9">
+              <input type="hidden" name="sysUser.passWord" >
+              <input type="password" id="passWord" required placeholder="一次机会，请牢记...">
+            </div>
+          </div>
+
+          
+
+          <div class="am-form-group">
+            <label for="idCard" class="am-u-sm-3 am-form-label">身份证</label>
+            <div class="am-u-sm-9">
+              <input type="text" id="idCard" name="sysUser.idCard" placeholder="输入你的身份证号码">
+            </div>
+          </div>
+		
+          <div class="am-form-group">
+            <label for="addr" class="am-u-sm-3 am-form-label">地址</label>
+            <div class="am-u-sm-9">
+              <input type="text"  name="sysUser.addr" placeholder="输入你的地址">
+            </div>
+          </div>
+
+          
+          <div class="am-form-group">
+            <label for="sortNo" class="am-u-sm-3 am-form-label">排序号</label>
+            <div class="am-u-sm-9">
+              <input type="number" name="sysUser.sortNo" placeholder="排序，越大越靠前 0-999999" min="0" max="999999">
+            </div>
+          </div>
+          
+
+          <div class="am-form-group">
+            <div class="am-u-sm-3 am-u-sm-push-3">
+              	<button type="button" onclick="history.go(-1);" class="am-btn am-btn-primary"><span class="am-icon-arrow-left"></span> 返回</button>
+            </div>
+            
+            <div class="am-u-sm-6">
+              	<button type="button" onclick="save()" class="am-btn am-btn-primary"><span class="am-icon-save"></span> 保存</button>
+            </div>
+          </div>
+      </div>
+      </form>
+    </div>
+  </div>
+  <!-- content end -->
+</body>
+<!-- content end -->
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="${rootPath}/assets/js/polyfill/rem.min.js"></script>
+<script src="${rootPath}/assets/js/polyfill/respond.min.js"></script>
+<script src="${rootPath}/assets/js/amazeui.legacy.js"></script>
+<![endif]-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="${rootPath}/assets/js/jquery.min.js"></script>
+<script src="${rootPath}/assets/js/amazeui.min.js"></script>
+<!--<![endif]-->
+<script src="${rootPath}/assets/js/app.js"></script>
+<script type="text/javascript" src="${rootPath}/ext/js/jquery.md5.js"></script>
+<!-- 校验 -->
+<link rel="stylesheet" href="${rootPath}/ext/css/validator-tooltip.css">
+<script src="${rootPath}/ext/js/validator-tooltip.js"></script>
+</html>
