@@ -70,7 +70,7 @@ public class SysLoginLog extends Model<SysLoginLog>{
 	}
 	
 	public void delUserTx( String ids ) throws BuziException{
-		Db.update( "delete from `sys_login_log` where `id` in (?)" , ids ) ;
+		Db.update( "delete from sys_login_log where id in (?)" , ids ) ;
     }
 	
 }

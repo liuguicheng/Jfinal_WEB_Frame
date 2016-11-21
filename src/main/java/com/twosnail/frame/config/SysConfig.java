@@ -18,6 +18,7 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.ext.plugin.shiro.ShiroInterceptor;
 import com.jfinal.ext.plugin.shiro.ShiroPlugin;
+import com.jfinal.kit.PathKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.tx.TxByRegex;
 import com.jfinal.plugin.druid.DruidPlugin;
@@ -65,11 +66,14 @@ public class SysConfig extends JFinalConfig {
 		//设置根目录
 		WebAppResourceLoader loader = (WebAppResourceLoader ) gt.getResourceLoader();
 		loader.setRoot("src/main/webapp/view");
+//		 String path=PathKit.getWebRootPath();
+//		loader.setRoot(path+"/view");
 		logger.debug("设置根目录:" + loader.getRoot());
 
 		//全局变量
 		Map<String, Object> sharedVars = new HashMap<String, Object>();
 		sharedVars.put("rootPath", "http://localhost") ;
+//		sharedVars.put("rootPath", "http://112.74.105.229/Jfinal_WEB_Frame") ;
 		gt.setSharedVars(sharedVars);
 
 		//error页面
