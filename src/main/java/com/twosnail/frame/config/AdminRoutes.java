@@ -10,7 +10,7 @@ import com.twosnail.frame.controller.RoleController;
 import com.twosnail.frame.controller.UserController;
 import com.twosnail.frame.controller.business.CustomerServiceContactController;
 import com.twosnail.frame.model.business.CustomerServiceContact;
-
+//后台视图地址映射
 public class AdminRoutes extends Routes {
 
 	@Override

@@ -1,6 +1,7 @@
 package com.twosnail.frame.commin.exception;
 /**   
  * @Title: BuziException.java
+ * 自定义异常
  */
 public class BuziException extends Exception{
 

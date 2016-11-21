@@ -20,7 +20,7 @@ public class CustomerServiceContactController extends Controller {
 	
 	private Logger logger = Logger.getLogger(CustomerServiceContactController.class) ;
 
-	@RequiresPermissions("CustomerServiceContactController")
+	@RequiresPermissions("business.CustomerServiceContactController")
 	public void index(){
 		try {
 			Integer pageNum = getParaToInt( "pageNum" ) ;

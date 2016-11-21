@@ -156,7 +156,9 @@ public class MenuController extends Controller {
     	try {
 			if( SysUser.me.checkUserById( id ) ){
 	        	try {
-	        		SysMenu.me.delMenuTx( id );
+	        		
+	        		SysMenu.me.delMenuTx( id );		//删除菜单
+	        		SysButton.me.delButtonByMenuId(id);///删除按钮
 	        		renderJson( new ResultObj( ResultObj.SUCCESS , "删除成功" , null )) ;
 	        	} catch ( BuziException e ) {
 	        		this.logger.warn( "删除失败！" , e );

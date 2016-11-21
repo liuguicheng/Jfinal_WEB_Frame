@@ -32,6 +32,11 @@ public class SysButton extends Model<SysButton>{
 	public void addSysButtons( int menuId ,String permissionMethod ) throws BuziException {
 		//通过反射，找到所需节点名称，值
 		if(permissionMethod != null && !"".equals( permissionMethod )){
+			String[] pfd=permissionMethod.split("\\.");
+			String pfdname="";
+			if(pfd.length>0){
+				pfdname=pfd[0]+".";
+			}
 			Class<?> clz;
 			SysButton button = null ;
 			try {
@@ -42,7 +47,7 @@ public class SysButton extends Model<SysButton>{
 					RequiresPermissions permission = method.getAnnotation( RequiresPermissions.class ) ;
 					if( permission != null ){
 						String value = permission.value()[0] ;
-						if( value != null && !permissionMethod.equals( value ) ){
+						if( value != null && !permissionMethod.equals( pfdname+value ) ){
 							button.set( "menuId" , menuId ) ;
 							button.set( "value" , value ) ;
 							if( value.contains( "add" ) )
